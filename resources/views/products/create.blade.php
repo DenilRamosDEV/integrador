@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Create Product</h3>
-                    <form action="{{ route('products.store') }}" method="POST">
+                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @include('products._form', ['product' => $product])
                         <button type="submit" class="btn btn-primary">Create</button>

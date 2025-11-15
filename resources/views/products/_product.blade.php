@@ -1,14 +1,14 @@
-<div class="col-md-4 mb-4">
+<div class="col-md-3 mb-3">
     <div class="card h-100 shadow-sm">
         @if(!empty($product->image))
-            <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}"
+            <img src="{{ asset($product->image) }}" class="card-img-top" alt="{{ $product->name }}"
                 style="height:200px; object-fit:cover;">
         @else
-            <img src="{{ asset('images/placeholder.png') }}" class="card-img-top" alt="Sin imagen"
+            <img src="{{ asset('images/placeholder.jpg') }}" class="card-img-top" alt="Sin imagen"
                 style="height:200px; object-fit:cover;">
         @endif
 
-        <div class="card-body d-flex flex-column">
+        <div class="card-body d-flex flex-column p-2">
             <h5 class="card-title mb-1">{{ $product->name }}</h5>
             <small class="text-muted mb-2">{{ $product->category->name ?? 'Sin categoría' . $product->category_id }}</small>
 

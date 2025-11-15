@@ -15,6 +15,20 @@
     @enderror
 </div>
 <div class="mb-3">
+    <label for="image" class="form-label">Image</label>
+    @if(!empty($product->image))
+        <div class="mb-2">
+            <img src="{{ asset($product->image) }}" alt="Product image"
+                style="max-width:200px; height:auto; display:block;">
+        </div>
+    @endif
+    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image"
+        accept="image/*">
+    @error('image')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+<div class="mb-3">
     <label for="price" class="form-label">Price</label>
     <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" name="price"
         value="{{ $product->price }}" required>
@@ -29,7 +43,8 @@
         <option value="">Select a category</option>
         @foreach($categories as $category)
             <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>
-                {{ $category->name }}</option>
+                {{ $category->name }}
+            </option>
         @endforeach
     </select>
     @error('category_id')

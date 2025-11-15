@@ -32,21 +32,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
+        $params = $request->all();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $params['image'] = 'images/' . $filename;
+        }
+        Product::create($params);
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Product $product)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $product)
     {
         return view('products.edit', [
@@ -55,12 +56,19 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
+        $params = $request->all();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $params['image'] = 'images/' . $filename;
+            if (!empty($product->image)) {
+                unlink(public_path($product->image));
+            }
+        }
+        $product->update($params);
         return redirect()->route('home');
     }
 
@@ -69,6 +77,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        if (!empty($product->image)) {
+            unlink(public_path($product->image));
+        }
         $product->delete();
         return redirect()->route('home');
     }

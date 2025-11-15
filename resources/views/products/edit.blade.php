@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Create Product</h3>
-                    <form action="{{ route('products.update', $product->id) }}" method="POST">
+                    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         @include('products._form',['product'=>$product])
