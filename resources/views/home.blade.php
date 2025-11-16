@@ -18,3 +18,36 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttons = document.querySelectorAll('.add-to-cart');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-id');
+
+                    fetch(`add-to-cart`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ product_id: productId })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Actualizar el contador del carrito
+                            document.querySelector('.cart-count').innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    // console.log('holas');
+
+                });
+            });
+        });
+    </script>
+@endpush

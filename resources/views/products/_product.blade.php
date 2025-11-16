@@ -10,7 +10,8 @@
 
         <div class="card-body d-flex flex-column p-2">
             <h5 class="card-title mb-1">{{ $product->name }}</h5>
-            <small class="text-muted mb-2">{{ $product->category->name ?? 'Sin categoría' . $product->category_id }}</small>
+            <small
+                class="text-muted mb-2">{{ $product->category->name ?? 'Sin categoría' . $product->category_id }}</small>
 
             <p class="card-text text-secondary mb-3" style="flex:1;">
                 {{ \Illuminate\Support\Str::limit($product->description, 120) }}
@@ -20,15 +21,13 @@
                 <div class="h5 mb-0">s/.{{ number_format($product->price, 2) }}</div>
 
                 <div class="btn-group" role="group" aria-label="Acciones">
-                    <form action="" method="POST" class="d-inline mx-1">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-success" title="Agregar al carrito">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-                    </form>
+                    <button type="button" class="btn btn-sm btn-success add-to-cart" data-id="{{ $product->id }}" title="Agregar al carrito">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
 
                     @if(auth()->user()->isAdmin())
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary mx-1" title="Editar">
+                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary mx-1"
+                            title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
 
